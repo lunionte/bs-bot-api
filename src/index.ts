@@ -3,16 +3,19 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 dotenv.config();
 import express from "express";
-import { loginRoute } from "./routes/LoginRoute";
-import { userRoute } from "./routes/UserRoute";
+import { loginRoute } from "./routes/loginRoute";
+import { userRoute } from "./routes/userRoute";
 
 const app = express();
 app.use(cookieParser());
 
+const frontendUri = process.env.ALLOWED_ORIGINS;
+console.log(frontendUri);
+
 app.use(
     cors({
         origin: (origin, callback) => {
-            const allowedOrigins = ["http://localhost:3000", "https://f176564043f1.ngrok-free.app"];
+            const allowedOrigins = process.env.ALLOWED_ORIGINS || "undefined";
             if (!origin || allowedOrigins.includes(origin)) {
                 callback(null, true);
             } else {
