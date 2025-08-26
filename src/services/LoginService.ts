@@ -9,6 +9,8 @@ export class LoginService {
     }
 
     async loginWithDiscord(code: string) {
+        console.log("Entrando no loginWithDiscord");
+        console.log("Code:", code);
         const tokenResponse = await fetch("https://discord.com/api/oauth2/token", {
             method: "POST",
             headers: {
@@ -19,7 +21,7 @@ export class LoginService {
                 client_secret: process.env.CLIENT_SECRET || "null",
                 grant_type: "authorization_code",
                 code: code,
-                redirect_uri: process.env.REDIRECT_URI || "null",
+                redirect_uri: "https://776e2b883019.ngrok-free.app/api/auth/discord/login",
             }),
         });
 
@@ -69,5 +71,12 @@ export class LoginService {
 
         const { id, email, username, avatar } = await response.json();
         return { id, email, username, avatar };
+    }
+
+    async verifyJwt(token: string) {
+        const jwtVerify = jwt.verify(token, process.env.JWT_SECRET || "null");
+        console.log(jwtVerify);
+        console.log(process.env.JWT_SECRET);
+        return jwtVerify;
     }
 }

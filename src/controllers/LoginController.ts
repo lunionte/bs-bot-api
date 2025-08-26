@@ -15,15 +15,29 @@ export class LoginController {
         }
         try {
             const token = await new LoginService().loginWithDiscord(code);
-            res.cookie("auth_token", token, {
-                httpOnly: true,
-                secure: false, // true em produção com HTTPS
-                sameSite: "lax",
-            });
-            return res.redirect("https://d7f5ff73224c.ngrok-free.app/");
+
+            const FRONTEND_URI = process.env.FRONTEND_URI || "http://localhost:3000";
+            return res.redirect(`${FRONTEND_URI}?token=${token}`);
         } catch (error) {
             console.error(error);
             return res.status(500).json({ message: "Erro ao autenticar com o Discord" });
+        }
+    }
+
+    static async verifyUserToken(req: Request, res: Response) {
+        const token = req.headers.authorization;
+        console.log("TOKEN JWT:", token);
+        console.log("TOKEN JWT 23213121231231213312", token);
+        if (!token) {
+            return res.status(401).json({ message: "Não autenticado" });
+        }
+        try {
+            const user = await new LoginService().verifyJwt(token);
+            console.log(user);
+            return res.json({ user });
+        } catch (error) {
+            console.error(error);
+            return res.status(401).json({ message: "Token inválido" });
         }
     }
 }
