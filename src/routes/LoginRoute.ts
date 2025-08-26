@@ -1,7 +1,8 @@
 import { Router } from "express";
-import { LoginController } from "../controllers/LoginController";
+import { LoginController } from "../controllers/loginController";
 
 export const loginRoute = Router();
 
-loginRoute.get("/discord/callback", LoginController.redirectToDiscord);
-loginRoute.get("/discord/login", LoginController.loginWithDiscord);
+loginRoute.get("/discord/login", LoginController.redirectToDiscord);
+loginRoute.get("/discord/callback", LoginController.loginWithDiscord);
+loginRoute.post("/logout", LoginController.logout);
