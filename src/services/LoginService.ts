@@ -1,4 +1,4 @@
-import { LoginRepository } from "../repositories/LoginRepository";
+import { LoginRepository } from "../repositories/loginRepository";
 import jwt from "jsonwebtoken";
 
 export class LoginService {
@@ -21,7 +21,8 @@ export class LoginService {
                 client_secret: process.env.CLIENT_SECRET || "null",
                 grant_type: "authorization_code",
                 code: code,
-                redirect_uri: "https://776e2b883019.ngrok-free.app/api/auth/discord/login",
+                // só para confirmar, sendo exatamente igual ao que ta na discord app
+                redirect_uri: "https://f459e0eb2eba.ngrok-free.app/api/auth/discord/callback",
             }),
         });
 
