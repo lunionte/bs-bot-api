@@ -5,12 +5,10 @@ dotenv.config();
 import express from "express";
 import { loginRoute } from "./routes/loginRoute";
 import { userRoute } from "./routes/userRoute";
+import { botRoutes } from "./routes/botRoute";
 
 const app = express();
 app.use(cookieParser());
-
-const frontendUri = process.env.ALLOWED_ORIGINS;
-console.log(frontendUri);
 
 app.use(
     cors({
@@ -28,10 +26,11 @@ app.use(
 
 app.use(express.json());
 
-app.use("/api/auth", loginRoute);
 app.use("/api/users", userRoute);
+app.use("/api/auth", loginRoute);
+app.use("/api", botRoutes);
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
-    console.log("Servidor rodando na porta", PORT);
+    console.log("🟢 Servidor rodando na porta", PORT);
 });
