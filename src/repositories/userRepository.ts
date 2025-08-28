@@ -7,7 +7,7 @@ export class UserRepository {
         id: string,
         email: string,
         username: string,
-        acessToken: string,
+        accessToken: string,
         refreshToken: string,
         avatar: string
     ) {
@@ -15,7 +15,7 @@ export class UserRepository {
             id,
             username,
             email,
-            acessToken,
+            accessToken,
             refreshToken,
             avatar,
         });
