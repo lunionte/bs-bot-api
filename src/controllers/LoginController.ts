@@ -5,8 +5,9 @@ export class LoginController {
     // usado na rota discord/auth
     static async redirectToDiscord(req: Request, res: Response) {
         // redirect uri é o gerado pelo discord app
-        const redirect = process.env.REDIRECT_URI_LOGIN!;
+        //const redirect = process.env.REDIRECT_URI_LOGIN!;
         console.log("📶 Redirecionando...");
+        const redirect = process.env.REDIRECT_URI_LOGIN!;
         return res.redirect(redirect);
     }
 
